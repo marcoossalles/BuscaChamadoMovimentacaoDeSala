@@ -36,7 +36,7 @@ class BuscaChamadosSd:
                         lista_ids.append((item['id']))
             return lista_ids
         except Exception as e:
-            print(f'Ocorreu um erro ao realizar a requisição: {e}')
+            logging.error(f'Ocorreu um erro ao realizar a requisição: {e}')
             return None
         
     def BuscaDadosChamados(self, lista_ids_chamados):
@@ -53,7 +53,7 @@ class BuscaChamadosSd:
                 if response.status_code == 200:
                     info_chamado.append(response.json())
             except Exception as e:
-                print(f'Falha ao buscar chamado por ID {e}')
+                logging.error(f'Falha ao buscar chamado por ID {e}')
                 return None
             
         for item_chamados in info_chamado:
@@ -67,5 +67,5 @@ class BuscaChamadosSd:
             cpf = item[1].get('udf_sline_620', {})
             cnpj = item[1].get('udf_sline_606', {})
             if movimentacao == 'Sim':
-                lista_chamados_filter.append([id_chamado, origem, destino, cpf, cnpj, True])
+                lista_chamados_filter.append([id_chamado, origem, destino, cpf, cnpj, False])
         return lista_chamados_filter

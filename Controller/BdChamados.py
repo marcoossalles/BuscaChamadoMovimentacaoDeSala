@@ -20,10 +20,10 @@ class BancoChamados:
                 password=self.password,
                 dbname=self.dbname
             )
-            print(f"Conexão bem-sucedida ao banco de dados {self.dbname}.")
+            logging.info(f"Conexão bem-sucedida ao banco de dados {self.dbname}.")
             return self.conexao_bd_chamados
         except psycopg2.OperationalError as e:
-            print(f"O erro '{e}' ocorreu ao tentar conectar ao banco de dados {self.dbname}.")
+            logging.error(f"O erro '{e}' ocorreu ao tentar conectar ao banco de dados {self.dbname}.")
             return self.conexao_bd_chamados
 
     def RealizaInsertDadosChamados(self, lista_dados_chamados):
@@ -36,9 +36,9 @@ class BancoChamados:
             self.conexao_bd_chamados.commit()
             logging.info("Registros inseridos com sucesso!")
         except psycopg2.OperationalError as e:
-            print(f"O erro '{e}' ocorreu ao tentar conectar ao banco de dados {self.dbname}.")
+            logging.error(f"O erro '{e}' ocorreu ao tentar conectar ao banco de dados {self.dbname}.")
 
     def DesconectaBdChamados(self):
         if self.conexao_bd_chamados:
             self.conexao_bd_chamados.close()
-            print(f"Conexão com o banco de dados {self.dbname} fechada.")
+            logging.info(f"Conexão com o banco de dados {self.dbname} fechada.")
